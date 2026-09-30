@@ -1,98 +1,90 @@
-# Skytech-Geo · Formulario de registro de clientes
+# Registro de socios: Sociedad Astronómica Vega Austral
 
-Práctica universitaria de la asignatura **Desarrollo Web**. Se construyó un formulario de registro de clientes para una plataforma ficticia de servicios geoespaciales y con drones ("Skytech-Geo"). El formulario es responsivo, semántico y valida todos los datos en el navegador, sin servidor.
+Formulario web de inscripción de nuevos socios para una sociedad astronómica y observatorio comunitario **ficticios**. Es una práctica universitaria de la asignatura **Desarrollo Web**: un proyecto estático, responsivo y con validaciones del lado del cliente hechas en JavaScript puro.
 
-## Tecnologías
+## Siglas utilizadas
 
-Proyecto 100 % estático, sin frameworks, librerías ni recursos externos (CDN).
+| Sigla | Significado |
+|-------|-------------|
+| HTML5 | Lenguaje de Marcado de Hipertexto, versión 5 |
+| CSS3  | Hojas de Estilo en Cascada, versión 3 |
+| DOM   | Modelo de Objetos del Documento |
+| SVG   | Gráficos Vectoriales Escalables |
+| ARIA  | Aplicaciones de Internet Enriquecidas y Accesibles (atributos de accesibilidad) |
 
-- **HTML5** (Lenguaje de Marcado de Hipertexto, versión 5): estructura semántica del formulario.
-- **CSS3** (Hojas de Estilo en Cascada, nivel 3): diseño responsivo *mobile-first* con variables, Grid, Flexbox, transiciones y animaciones.
-- **JavaScript** (puro, sin librerías): manipulación del DOM (Modelo de Objetos del Documento) y validaciones del lado del cliente.
+## Tecnologías utilizadas
+
+- **HTML5** semántico: `form`, `fieldset`, `legend`, `label` asociado con `for`, tipos de input correctos y atributos de validación nativos.
+- **CSS3**: variables CSS (custom properties), CSS Grid y Flexbox, diseño *mobile-first* con dos media queries (480 px y 720 px), transiciones y animaciones con respeto a `prefers-reduced-motion`.
+- **JavaScript** puro (sin frameworks ni librerías): manipulación del DOM y validaciones con los eventos `input`, `blur` y `submit`.
+- Tipografías de Google Fonts: *Instrument Serif* (titulares) e *IBM Plex Sans* (cuerpo), con pila de respaldo local.
 
 ## Funcionalidades implementadas
 
-### Campos del formulario
+- Nueve campos: nombre completo, correo electrónico, teléfono, edad, contraseña, confirmación de contraseña, área de interés (desplegable), comentarios (opcional, con contador de caracteres) y aceptación de términos (casilla).
+- **Validación en tiempo real** (evento `input`) mientras se escribe.
+- **Validación al perder el foco** (evento `blur`).
+- **Validación final al enviar** (evento `submit`) con `event.preventDefault()`: si hay datos inválidos, el envío se **bloquea**, se muestra un resumen de error dentro del panel y el foco salta al primer campo inválido.
+- Mensajes de error **específicos** bajo cada campo, con espacio reservado para que el diseño no salte, y anunciados a lectores de pantalla con `aria-live`.
+- Chips de requisitos de la contraseña (8 caracteres, una mayúscula, un número) que se encienden al cumplirse.
+- Contador de caracteres en los comentarios (máximo 500).
+- Aviso global de éxito al enviar correctamente; los datos se imprimen en la consola del navegador (la contraseña se muestra enmascarada) y el formulario se limpia.
+- Botón secundario "Limpiar ficha" que vacía los valores y todos los estados visuales.
+- El botón de envío **nunca se deshabilita**, para poder demostrar el bloqueo de envíos inválidos.
+- Estados visuales de foco (borde y anillo latón), error (ámbar rosado) y válido (aurora) en todos los campos; foco visible por teclado.
 
-| # | Campo | Tipo de control | Reglas de validación |
-|---|-------|-----------------|----------------------|
-| 1 | Nombre completo | `input type="text"` | Obligatorio, mínimo 3 caracteres, solo letras y espacios |
-| 2 | Correo electrónico | `input type="email"` | Obligatorio, formato validado con expresión regular |
-| 3 | Contraseña | `input type="password"` | Obligatoria, mínimo 8 caracteres, una mayúscula y un número; indicador visual de requisitos |
-| 4 | Confirmar contraseña | `input type="password"` | Obligatoria, debe coincidir con la contraseña |
-| 5 | Teléfono | `input type="tel"` | Obligatorio, solo dígitos, entre 7 y 15 caracteres |
-| 6 | Edad | `input type="number"` | Obligatoria, entero entre 18 y 100 (`min`/`max`) |
-| 7 | Tipo de servicio | `select` | Obligatorio (Topografía, Geoespacial, Drones, Consultoría) |
-| 8 | Términos y condiciones | `input type="checkbox"` | Obligatorio (debe estar marcado) |
-| 9 | Comentarios | `textarea` | Opcional, máximo 500 caracteres con contador |
+## Reglas de validación
 
-### HTML5 semántico
-
-- `<form>`, `<fieldset>` y `<legend>` para agrupar los campos en tres bloques: datos personales, datos de acceso y servicio de interés.
-- Un `<label>` asociado a cada control mediante el atributo `for`.
-- Tipos de `input` correctos y atributos `required`, `placeholder`, `min`, `max`, `minlength`, `maxlength`, `pattern`, `autocomplete` e `inputmode`.
-- Un `<span aria-live="polite">` por campo para su mensaje de error, y un mensaje global con `role="status"`.
-- `<!DOCTYPE html>`, `lang="es"`, meta *viewport* y `<title>` descriptivo.
-
-### CSS responsivo
-
-- Variables CSS en `:root` para colores, tipografía, espaciados y radios.
-- Maquetación con CSS Grid (dos columnas en escritorio) y Flexbox (grupos, campos, botones).
-- Enfoque *mobile-first* con dos *media queries*: `480px` (campos cortos en dos columnas, botones en fila) y `768px` (columna de contexto + formulario).
-- Estados visuales: foco con anillo naranja, error con borde rojo y fondo tenue, válido con borde verde.
-- Transiciones en bordes, sombras y botones; animaciones de aparición de mensajes, sacudida sutil al marcar un error y pulso al enviar con éxito.
-- Botón con estados `hover`, `active`, `focus-visible` y `disabled`.
-- Respeto a la preferencia `prefers-reduced-motion`.
-
-### JavaScript
-
-- Los tres eventos exigidos:
-  - **input**: validación en tiempo real mientras el usuario escribe.
-  - **blur**: validación al perder el foco.
-  - **submit**: validación final con `event.preventDefault()`; el envío se bloquea si hay errores y el foco salta al primer campo inválido.
-- Una función de validación por campo (`validarNombre`, `validarCorreo`, `validarContrasena`, `validarConfirmacion`, `validarTelefono`, `validarEdad`, `validarServicio`, `validarComentarios`, `validarTerminos`) y una función `validarFormulario()` que las ejecuta todas.
-- Mensajes de error específicos por campo y mensaje de éxito global.
-- Al enviar con éxito: se imprimen los datos en la consola (sin la contraseña), se muestra la confirmación, se deshabilita el botón momentáneamente y se limpia el formulario.
-- Indicador de requisitos de la contraseña y contador de caracteres del textarea, ambos actualizados en tiempo real.
+| Campo | Regla |
+|-------|-------|
+| Nombre completo | Obligatorio, mínimo 3 caracteres, solo letras y espacios (admite tildes y ñ) |
+| Correo electrónico | Obligatorio, formato válido comprobado con expresión regular |
+| Teléfono | Obligatorio, solo dígitos, entre 7 y 15 |
+| Edad | Obligatoria, número entero entre 18 y 100 |
+| Contraseña | Obligatoria, mínimo 8 caracteres, al menos una mayúscula y un número |
+| Confirmar contraseña | Obligatoria, debe coincidir con la contraseña |
+| Área de interés | Obligatoria, hay que elegir una opción del desplegable |
+| Comentarios | Opcional, máximo 500 caracteres |
+| Términos y condiciones | Obligatorio marcar la casilla |
 
 ## Estructura del proyecto
 
 ```
 Guia 1/
-├── index.html        # Estructura semántica del formulario
+├── index.html        Estructura semántica del formulario (HTML5)
 ├── css/
-│   └── style.css     # Estilos, variables, responsividad y animaciones
+│   └── style.css     Estilos, variables, diseño responsivo y animaciones (CSS3)
 ├── js/
-│   └── script.js     # Validaciones y manejo de eventos del DOM
-├── README.md         # Este documento
-├── GUION_VIDEO.md    # Guion para el video de evidencia
-└── .gitignore        # Archivos del sistema y del editor a ignorar
+│   └── script.js     Validaciones y manejo de eventos mediante el DOM (JavaScript)
+├── README.md         Este documento
+├── GUION_VIDEO.md    Guion para el video de demostración
+└── .gitignore        Archivos del sistema y del editor que no se versionan
 ```
 
 ## Cómo ejecutarlo localmente
 
-No requiere instalación ni servidor.
+No necesita servidor ni instalación.
 
 1. Clona o descarga el repositorio.
-2. Abre el archivo `index.html` con doble clic en cualquier navegador moderno (Chrome, Edge, Firefox).
-3. Opcional: en Visual Studio Code, instala la extensión **Live Server**, haz clic derecho sobre `index.html` y elige *Open with Live Server* para recargar automáticamente al editar.
-4. Abre la consola del navegador (F12 → pestaña *Console*) para ver los datos impresos tras un envío exitoso.
+2. Abre el archivo `index.html` con doble clic en cualquier navegador moderno (Chrome, Firefox, Edge o Safari).
+
+Opcionalmente, en Visual Studio Code puedes instalar la extensión **Live Server**, hacer clic derecho sobre `index.html` y elegir *Open with Live Server* para que la página se recargue sola al guardar cambios.
+
+Para ver los datos que se registran al enviar el formulario, abre la consola del navegador con `F12` (pestaña *Consola*).
 
 ## Decisiones de diseño
 
-- Se añadió `novalidate` al `<form>` para desactivar los globos de error nativos del navegador y que toda la validación (y sus mensajes en español) la controle JavaScript. Los atributos HTML5 se mantienen como respaldo y documentación.
-- Los mensajes de "campo obligatorio" no aparecen mientras el usuario aún no ha interactuado con el campo; sí aparecen al perder el foco o al intentar enviar.
-- La contraseña se excluye de los datos impresos en consola por buenas prácticas.
-- La paleta se inspira en los mapas topográficos: fondo gris-verdoso, azul profundo para la marca y naranja de señalización para los acentos. El encabezado usa curvas de nivel dibujadas con SVG inline (sin recursos externos).
+- Concepto visual "noche de observación": un único mundo oscuro elegido a propósito (se declara `color-scheme: dark` y fondos explícitos; no hay modo claro).
+- Paleta de índigo y ciruela con acento latón para foco, enlaces y botón primario; ámbar rosado para errores y verde aurora para lo válido.
+- Columna central única de 640 px como máximo. La cabecera celeste (estrella de ocho puntas en SVG, nombre en serif y divisor con estrella) es el único golpe de audacia; el panel del formulario es sobrio.
+- El tema aparece como contenido, no como adorno: las áreas de interés son astronómicas y los textos hablan de salidas de observación y astrofotografía.
 
 ## Autores
 
 Completar con los integrantes del grupo:
 
-| Nombre completo | Código / Identificación | Rol en el proyecto |
-|-----------------|-------------------------|--------------------|
-|                 |                         |                    |
-|                 |                         |                    |
-|                 |                         |                    |
+- Nombre y apellidos, código de estudiante
+- Nombre y apellidos, código de estudiante
+- Nombre y apellidos, código de estudiante
 
-Asignatura: Desarrollo Web · Docente: _________________ · Periodo: _________________
+Asignatura: Desarrollo Web. Docente: ______________________. Periodo: ______________________.

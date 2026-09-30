@@ -1,27 +1,47 @@
-# Guion del video de evidencia (máximo 3 minutos)
+# Guion del video de demostración (máximo 3 minutos)
 
-Antes de grabar: abre `index.html` en el navegador, abre las herramientas de desarrollador (F12) con la pestaña **Console** visible, y ten Visual Studio Code abierto con los tres archivos del proyecto.
+Preparación antes de grabar:
 
-| Tiempo | Qué mostrar | Requisito de la rúbrica que evidencia |
-|--------|-------------|----------------------------------------|
-| 0:00 – 0:15 | Presentación del grupo y del proyecto: "Formulario de registro de clientes para Skytech-Geo, hecho con HTML5, CSS3 y JavaScript puro". Mostrar la página completa en escritorio. | Contexto general |
-| 0:15 – 0:40 | En VS Code, recorrer rápidamente `index.html`: `<form>`, los tres `<fieldset>` con `<legend>`, un `<label for>` asociado a su `input`, los tipos (`text`, `email`, `password`, `tel`, `number`, `select`, `checkbox`, `textarea`) y el `<span aria-live="polite">` de error. Señalar `<!DOCTYPE html>`, `lang="es"` y el meta *viewport*. | HTML5 semántico y campos (mínimo 5, aquí 9) |
-| 0:40 – 1:00 | En `css/style.css`, mostrar las variables en `:root`, el `display: grid` de `.principal`, y las dos *media queries* (`480px` y `768px`). Mostrar las `@keyframes`. | CSS: variables, Grid/Flexbox, responsivo, animaciones |
-| 1:00 – 1:35 | **Validación en tiempo real (evento input):** escribir "Ab" en Nombre y ver el error de mínimo 3 caracteres; completar "Ana López" y ver el borde verde. Escribir un correo sin "@" y ver el error; corregirlo. En Contraseña, escribir letra a letra y mostrar cómo se encienden los requisitos (8 caracteres, mayúscula, número). Escribir una confirmación distinta y ver "Las contraseñas no coinciden". | JavaScript: evento `input`, mensajes de error específicos, estados error/válido |
-| 1:35 – 1:50 | **Evento blur:** hacer clic en Teléfono, salir sin escribir y ver "El teléfono es obligatorio". Escribir "12ab" y salir: error de solo dígitos. Escribir la edad "15" y salir: error de mínimo 18. | JavaScript: evento `blur`, validación de teléfono y rango de edad |
-| 1:50 – 2:10 | **Bloqueo del envío inválido (evento submit):** dejar el select sin elegir y la casilla sin marcar, pulsar "Crear cuenta". Mostrar que no se envía, aparece el mensaje global rojo, se marcan todos los campos con error y el foco salta al primero. Mostrar en `js/script.js` la línea `evento.preventDefault()`. | JavaScript: evento `submit`, bloqueo de envío inválido |
-| 2:10 – 2:35 | **Envío exitoso:** completar todos los campos correctamente, marcar la casilla y pulsar "Crear cuenta". Mostrar el botón deshabilitado ("Creando cuenta..."), el mensaje verde con animación, el formulario limpio y el objeto con los datos en la consola. | Funcionalidad completa y mensaje de éxito global |
-| 2:35 – 2:55 | **Diseño responsivo:** activar el modo dispositivo (Ctrl+Shift+M) y cambiar entre un móvil (~375 px), una tablet (~768 px) y escritorio. Mostrar cómo el formulario pasa de una columna a dos y cómo Teléfono/Edad se colocan en fila desde 480 px. | CSS responsivo *mobile-first* |
-| 2:55 – 3:00 | Cierre: mostrar el `README.md` y el repositorio en GitHub con el historial de commits. | Organización y documentación |
+- Abrir `index.html` en el navegador a pantalla completa.
+- Abrir la consola del navegador (`F12`, pestaña *Consola*) y dejarla acoplada abajo o a la derecha.
+- Tener la ventana del navegador en un tamaño que permita luego reducir el ancho.
 
-## Consejos de grabación
+## 1. Presentación y diseño (0:00 – 0:30)
 
-- Graba en una sola toma con una resolución de al menos 1280×720.
-- Habla mientras muestras; no leas el código completo, solo señala los fragmentos clave.
-- Usa datos de prueba preparados para no perder tiempo escribiendo:
-  - Nombre: `Ana López Ruiz`
-  - Correo: `ana.lopez@skytech-geo.com`
-  - Contraseña: `Drone2026`
-  - Teléfono: `3001234567`
-  - Edad: `29`
-  - Servicio: `Drones`
+- Decir el nombre del grupo y del proyecto: formulario de registro de socios de la Sociedad Astronómica Vega Austral, proyecto académico de Desarrollo Web.
+- Recorrer la página: cabecera con la estrella en SVG, nombre en tipografía serif y panel "ficha de nuevo socio" dividido en tres secciones con `fieldset` y `legend`.
+- Mencionar que solo se usan HTML5, CSS3 y JavaScript puro, sin frameworks.
+- Pasar el ratón por los campos y hacer clic en uno para mostrar el estado de foco (borde y anillo latón).
+
+## 2. Validación en tiempo real, evento `input` (0:30 – 1:05)
+
+- En **Nombre completo**, escribir "Ma" y mostrar que aparece "al menos 3 caracteres"; escribir "Mar1a" y mostrar el mensaje de solo letras; corregir a "María Pérez" y ver el borde verde aurora.
+- En **Contraseña**, escribir letra a letra "vega" (ningún chip), luego "Vega" (se enciende "Una mayúscula"), luego "Vega2026" (se encienden los tres chips).
+- En **Comentarios**, escribir un par de palabras y señalar cómo el contador cambia en vivo.
+
+## 3. Validación al perder el foco, evento `blur` (1:05 – 1:25)
+
+- Hacer clic en **Correo electrónico**, no escribir nada y pulsar Tab: aparece "Escribe tu correo electrónico".
+- Escribir "ana@correo" (sin dominio válido) y pulsar Tab: aparece el mensaje de formato con el ejemplo.
+- Corregir a "ana@correo.com" y ver que el mensaje desaparece y el borde pasa a verde.
+
+## 4. Mensajes de error por campo y bloqueo del envío inválido, evento `submit` (1:25 – 2:05)
+
+- Dejar varios campos vacíos o incorrectos: teléfono con letras, edad 15, confirmación distinta a la contraseña, desplegable sin elegir y casilla sin marcar.
+- Pulsar **Enviar solicitud** (recalcar que el botón nunca está deshabilitado).
+- Mostrar que la página **no se recarga**, que el panel se sacude y aparece el aviso rojo con el número de campos por corregir, que cada campo muestra su mensaje específico y que el foco saltó al primer campo inválido.
+- Mostrar en la consola que no se imprimió ningún dato.
+
+## 5. Envío exitoso (2:05 – 2:35)
+
+- Corregir todos los campos: teléfono con 9 dígitos, edad 24, contraseñas iguales, elegir "Astrofotografía", marcar la casilla.
+- Pulsar **Enviar solicitud**: aparece el aviso verde de bienvenida con el nombre y el correo.
+- Señalar en la consola la tabla con los datos registrados (la contraseña aparece enmascarada).
+- Mostrar que el formulario se limpió y que los chips y el contador volvieron a cero.
+
+## 6. Diseño responsivo (2:35 – 3:00)
+
+- Reducir el ancho de la ventana poco a poco (o activar la vista de dispositivo móvil con `Ctrl+Shift+M` en las herramientas de desarrollo).
+- Señalar los dos puntos de quiebre: por encima de 720 px hay más aire y el panel es más ancho; por debajo de 480 px los campos de teléfono y edad pasan de compartir fila a apilarse y los botones se ponen uno debajo del otro.
+- Mostrar que nada se desborda ni aparece barra horizontal en móvil.
+- Cerrar con una frase de despedida y el nombre del repositorio en GitHub.

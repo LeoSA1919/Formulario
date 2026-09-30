@@ -10,6 +10,6 @@ desktop.ini
 *.swo
 *~
 
-# Archivos temporales y registros
+# Registros y archivos temporales
 *.log
 *.tmp
