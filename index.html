@@ -2,202 +2,134 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <!-- Viewport: imprescindible para que el diseño responsivo funcione en móviles -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- El sitio tiene un único mundo visual oscuro; se declara para que el navegador lo respete -->
-  <meta name="color-scheme" content="dark">
-  <meta name="description" content="Formulario de registro de socios de la Sociedad Astronómica Vega Austral, un observatorio comunitario ficticio. Práctica universitaria de Desarrollo Web.">
-  <title>Hazte socio de la Sociedad Astronómica Vega Austral</title>
-
-  <!-- Tipografías: Instrument Serif (titulares) e IBM Plex Sans (cuerpo), con pila de respaldo en el CSS -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <meta name="color-scheme" content="light">
+  <title>Instituto Meridiano — Solicitud de admisión</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-
-  <!-- Hoja de estilos propia -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="css/style.css">
-  <!-- Script con "defer": se descarga en paralelo y se ejecuta cuando el DOM ya está construido -->
-  <script src="js/script.js" defer></script>
 </head>
 <body>
-
-  <!-- ============================================================
-       CABECERA CELESTE: marca en SVG, nombre de la sociedad e invitación
-       ============================================================ -->
-  <header class="cabecera">
-    <!-- Marca: estrella de ocho puntas dibujada en SVG en línea -->
-    <svg class="cabecera__marca" viewBox="0 0 100 100" width="72" height="72" role="img" aria-labelledby="titulo-marca">
-      <title id="titulo-marca">Estrella de ocho puntas, emblema de la sociedad</title>
-      <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="0.75" opacity="0.35"/>
-      <polygon fill="currentColor"
-        points="90,50 64.8,56.1 78.3,78.3 56.1,64.8 50,90 43.9,64.8 21.7,78.3 35.2,56.1 10,50 35.2,43.9 21.7,21.7 43.9,35.2 50,10 56.1,35.2 78.3,21.7 64.8,43.9"/>
-      <circle cx="50" cy="50" r="4" fill="#15132e"/>
-    </svg>
-
-    <h1 class="cabecera__titulo">Sociedad Astronómica <em>Vega Austral</em></h1>
-    <p class="cabecera__invitacion">
-      Salidas de observación, noches de telescopio y talleres de astrofotografía.
-      Registra tus datos y reserva tu sitio bajo el cielo.
-    </p>
-
-    <!-- Divisor fino con una estrella pequeña en el centro -->
-    <div class="divisor" aria-hidden="true">
-      <span class="divisor__linea"></span>
-      <svg class="divisor__estrella" viewBox="0 0 100 100" width="14" height="14">
-        <polygon fill="currentColor" points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42"/>
+<div class="page">
+  <header class="letterhead">
+    <span class="brandmark">
+      <svg class="emblem" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6">
+        <circle cx="16" cy="16" r="13"/>
+        <ellipse cx="16" cy="16" rx="5.6" ry="13"/>
+        <line x1="16" y1="3" x2="16" y2="29"/>
       </svg>
-      <span class="divisor__linea"></span>
-    </div>
+      <span class="wordmark">Instituto Meridiano</span>
+    </span>
+    <span class="doclabel">Solicitud de admisión</span>
   </header>
 
-  <!-- ============================================================
-       PANEL "BITÁCORA DE OBSERVACIÓN" CON EL FORMULARIO
-       ============================================================ -->
-  <main class="contenido">
-    <section class="bitacora" aria-labelledby="titulo-bitacora">
-      <div class="bitacora__intro">
-        <h2 id="titulo-bitacora" class="bitacora__titulo">Ficha de nuevo socio</h2>
-        <p class="bitacora__nota">
-          Los campos marcados con <span class="obligatorio" aria-hidden="true">*</span>
-          <span class="visualmente-oculto">asterisco</span> son obligatorios.
-        </p>
-      </div>
+  <div class="intro">
+    <h1>Solicitud de admisión</h1>
+    <p>Completa tus datos para postular a nuestros programas de educación ejecutiva. Revisaremos tu solicitud y te escribiremos por correo. Todos los datos se validan en tu navegador.</p>
+  </div>
 
-      <!-- Avisos globales: se muestran mediante JavaScript al enviar -->
-      <div id="aviso-exito" class="aviso aviso--exito" role="status" aria-live="polite" hidden></div>
-      <div id="aviso-error" class="aviso aviso--error" role="alert" hidden></div>
+  <main class="sheet">
+    <div id="okBanner" class="banner ok" hidden tabindex="-1" role="status" aria-live="polite">
+      <strong>Solicitud enviada.</strong> Recibirás un correo de confirmación con los siguientes pasos.
+    </div>
+    <div id="errBanner" class="banner err" hidden role="alert" aria-live="assertive">
+      Revisa los campos marcados antes de enviar la solicitud.
+    </div>
 
-      <!-- novalidate: desactivamos los globos nativos del navegador para que las
-           validaciones las haga nuestro JavaScript y se vean los mensajes propios -->
-      <form id="formulario-registro" class="formulario" action="#" method="post" novalidate>
+    <form id="form" novalidate>
+      <fieldset class="group">
+        <legend class="group-label">Datos personales</legend>
 
-        <!-- ---------- Sección 1: Datos personales ---------- -->
-        <fieldset class="seccion">
-          <legend class="seccion__titulo">Datos personales</legend>
-
-          <div class="campo">
-            <label for="nombre" class="campo__etiqueta">Nombre completo <span class="obligatorio" aria-hidden="true">*</span></label>
-            <input type="text" id="nombre" name="nombre" class="campo__control"
-                   placeholder="Como aparece en tu documento"
-                   required minlength="3" maxlength="80" autocomplete="name"
-                   aria-describedby="error-nombre">
-            <span id="error-nombre" class="campo__error" aria-live="polite"></span>
-          </div>
-
-          <div class="campo">
-            <label for="correo" class="campo__etiqueta">Correo electrónico <span class="obligatorio" aria-hidden="true">*</span></label>
-            <input type="email" id="correo" name="correo" class="campo__control"
-                   placeholder="nombre@dominio.com"
-                   required maxlength="120" autocomplete="email" inputmode="email"
-                   aria-describedby="error-correo">
-            <span id="error-correo" class="campo__error" aria-live="polite"></span>
-          </div>
-
-          <!-- Teléfono y edad comparten fila a partir de 480px -->
-          <div class="fila">
-            <div class="campo">
-              <label for="telefono" class="campo__etiqueta">Teléfono <span class="obligatorio" aria-hidden="true">*</span></label>
-              <input type="tel" id="telefono" name="telefono" class="campo__control"
-                     placeholder="Solo dígitos, 7 a 15"
-                     required minlength="7" maxlength="15" autocomplete="tel" inputmode="numeric"
-                     aria-describedby="error-telefono">
-              <span id="error-telefono" class="campo__error" aria-live="polite"></span>
-            </div>
-
-            <div class="campo">
-              <label for="edad" class="campo__etiqueta">Edad <span class="obligatorio" aria-hidden="true">*</span></label>
-              <input type="number" id="edad" name="edad" class="campo__control"
-                     placeholder="18 a 100"
-                     required min="18" max="100" step="1" inputmode="numeric"
-                     aria-describedby="error-edad">
-              <span id="error-edad" class="campo__error" aria-live="polite"></span>
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- ---------- Sección 2: Acceso a la bitácora ---------- -->
-        <fieldset class="seccion">
-          <legend class="seccion__titulo">Acceso a la bitácora</legend>
-
-          <div class="campo">
-            <label for="contrasena" class="campo__etiqueta">Contraseña <span class="obligatorio" aria-hidden="true">*</span></label>
-            <input type="password" id="contrasena" name="contrasena" class="campo__control"
-                   placeholder="Mínimo 8 caracteres"
-                   required minlength="8" maxlength="64" autocomplete="new-password"
-                   aria-describedby="error-contrasena requisitos-contrasena">
-            <!-- Chips de requisitos: se "encienden" al cumplirse (JavaScript añade la clase) -->
-            <ul id="requisitos-contrasena" class="requisitos" aria-label="Requisitos de la contraseña">
-              <li class="requisito" data-requisito="longitud">8 caracteres</li>
-              <li class="requisito" data-requisito="mayuscula">Una mayúscula</li>
-              <li class="requisito" data-requisito="numero">Un número</li>
-            </ul>
-            <span id="error-contrasena" class="campo__error" aria-live="polite"></span>
-          </div>
-
-          <div class="campo">
-            <label for="confirmacion" class="campo__etiqueta">Confirmar contraseña <span class="obligatorio" aria-hidden="true">*</span></label>
-            <input type="password" id="confirmacion" name="confirmacion" class="campo__control"
-                   placeholder="Repite la contraseña"
-                   required minlength="8" maxlength="64" autocomplete="new-password"
-                   aria-describedby="error-confirmacion">
-            <span id="error-confirmacion" class="campo__error" aria-live="polite"></span>
-          </div>
-        </fieldset>
-
-        <!-- ---------- Sección 3: Tu lugar en la sociedad ---------- -->
-        <fieldset class="seccion">
-          <legend class="seccion__titulo">Tu lugar en la sociedad</legend>
-
-          <div class="campo">
-            <label for="interes" class="campo__etiqueta">Área de interés <span class="obligatorio" aria-hidden="true">*</span></label>
-            <div class="selector">
-              <select id="interes" name="interes" class="campo__control" required aria-describedby="error-interes">
-                <option value="" selected>Elige un área</option>
-                <option value="planetaria">Observación planetaria</option>
-                <option value="cielo-profundo">Cielo profundo (galaxias y nebulosas)</option>
-                <option value="astrofotografia">Astrofotografía</option>
-                <option value="divulgacion">Divulgación y charlas</option>
-              </select>
-            </div>
-            <span id="error-interes" class="campo__error" aria-live="polite"></span>
-          </div>
-
-          <div class="campo">
-            <label for="comentarios" class="campo__etiqueta">Comentarios <span class="campo__opcional">(opcional)</span></label>
-            <textarea id="comentarios" name="comentarios" class="campo__control campo__control--area"
-                      rows="4" maxlength="500"
-                      placeholder="¿Tienes telescopio propio? ¿Alguna noche de observación que te gustaría organizar?"
-                      aria-describedby="error-comentarios contador-comentarios"></textarea>
-            <div class="campo__pie">
-              <span id="error-comentarios" class="campo__error" aria-live="polite"></span>
-              <span id="contador-comentarios" class="contador" aria-live="polite">0 / 500</span>
-            </div>
-          </div>
-
-          <div class="campo campo--casilla">
-            <input type="checkbox" id="terminos" name="terminos" class="casilla" required aria-describedby="error-terminos">
-            <label for="terminos" class="casilla__etiqueta">
-              Acepto los <a href="#terminos-texto" class="enlace">términos y condiciones</a> de la sociedad
-              <span class="obligatorio" aria-hidden="true">*</span>
-            </label>
-            <span id="error-terminos" class="campo__error" aria-live="polite"></span>
-          </div>
-        </fieldset>
-
-        <!-- ---------- Acciones ---------- -->
-        <div class="acciones">
-          <!-- El botón de envío NUNCA se deshabilita: así se puede demostrar que el envío inválido se bloquea -->
-          <button type="submit" class="boton boton--primario">Enviar solicitud</button>
-          <button type="reset" class="boton boton--fantasma">Limpiar ficha</button>
+        <div class="field" id="f-nombre">
+          <label for="nombre">Nombre completo <span class="req" aria-hidden="true">*</span></label>
+          <input id="nombre" name="nombre" type="text" autocomplete="name" placeholder="Ej.: Laura Martínez Ruiz" required minlength="3" aria-describedby="e-nombre">
+          <span class="msg" id="e-nombre" aria-live="polite"></span>
         </div>
-      </form>
-    </section>
 
-    <p id="terminos-texto" class="pie-nota">
-      Proyecto académico de la asignatura Desarrollo Web. La sociedad y el observatorio son ficticios
-      y ningún dato se envía a un servidor: al registrarte, los datos se muestran en la consola del navegador.
-    </p>
+        <div class="field" id="f-correo">
+          <label for="correo">Correo electrónico <span class="req" aria-hidden="true">*</span></label>
+          <input id="correo" name="correo" type="email" autocomplete="email" placeholder="nombre@correo.com" required aria-describedby="e-correo">
+          <span class="msg" id="e-correo" aria-live="polite"></span>
+        </div>
+
+        <div class="row">
+          <div class="field" id="f-tel">
+            <label for="telefono">Teléfono <span class="req" aria-hidden="true">*</span></label>
+            <input id="telefono" name="telefono" type="tel" inputmode="numeric" autocomplete="tel" placeholder="0991234567" required aria-describedby="e-tel">
+            <span class="msg" id="e-tel" aria-live="polite"></span>
+          </div>
+          <div class="field" id="f-edad">
+            <label for="edad">Edad <span class="req" aria-hidden="true">*</span></label>
+            <input id="edad" name="edad" type="number" min="18" max="100" placeholder="18 a 100" required aria-describedby="e-edad">
+            <span class="msg" id="e-edad" aria-live="polite"></span>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend class="group-label">Cuenta de acceso</legend>
+
+        <div class="field" id="f-pass">
+          <label for="password">Contraseña <span class="req" aria-hidden="true">*</span></label>
+          <input id="password" name="password" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres" required minlength="8" aria-describedby="e-pass pw-reqs">
+          <ul class="pw-reqs" id="pw-reqs" aria-hidden="true">
+            <li data-req="len"><span class="tick">&#10003;</span>8 caracteres</li>
+            <li data-req="upper"><span class="tick">&#10003;</span>Una mayúscula</li>
+            <li data-req="num"><span class="tick">&#10003;</span>Un número</li>
+          </ul>
+          <span class="msg" id="e-pass" aria-live="polite"></span>
+        </div>
+
+        <div class="field" id="f-pass2">
+          <label for="password2">Confirmar contraseña <span class="req" aria-hidden="true">*</span></label>
+          <input id="password2" name="password2" type="password" autocomplete="new-password" placeholder="Repite la contraseña" required aria-describedby="e-pass2">
+          <span class="msg" id="e-pass2" aria-live="polite"></span>
+        </div>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend class="group-label">Programa de interés</legend>
+
+        <div class="field" id="f-programa">
+          <label for="programa">Programa <span class="req" aria-hidden="true">*</span></label>
+          <select id="programa" name="programa" required aria-describedby="e-programa">
+            <option value="" disabled selected>Selecciona un programa</option>
+            <option value="proyectos">Gestión de Proyectos</option>
+            <option value="datos">Analítica de Datos</option>
+            <option value="liderazgo">Liderazgo Ejecutivo</option>
+            <option value="finanzas">Finanzas Corporativas</option>
+          </select>
+          <span class="msg" id="e-programa" aria-live="polite"></span>
+        </div>
+
+        <div class="field" id="f-com">
+          <label for="comentarios">Comentarios <span class="opt">(opcional)</span></label>
+          <textarea id="comentarios" name="comentarios" maxlength="500" placeholder="¿Qué esperas del programa? Cuéntanos tu objetivo profesional." aria-describedby="c-com"></textarea>
+          <span class="count" id="c-com"><span id="count-num">0</span> / 500</span>
+        </div>
+      </fieldset>
+
+      <div class="terms" id="f-acepto">
+        <input id="acepto" name="acepto" type="checkbox" required aria-describedby="e-acepto">
+        <div>
+          <label for="acepto">Acepto los términos y condiciones y la política de tratamiento de datos <span class="req" aria-hidden="true">*</span></label>
+          <span class="msg" id="e-acepto" aria-live="polite"></span>
+        </div>
+      </div>
+      <details class="terms-doc">
+        <summary>Ver términos</summary>
+        <p>Los datos que proporciones se utilizan únicamente para procesar tu solicitud de admisión y contactarte. No se comparten con terceros. Este es un formulario de práctica académica y no constituye una inscripción real.</p>
+      </details>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-primary" id="enviar">Enviar solicitud</button>
+        <button type="button" class="btn btn-ghost" id="limpiar">Limpiar</button>
+      </div>
+    </form>
   </main>
 
+  <footer class="foot">Práctica de Desarrollo Web. Construida con HTML5, CSS3 y JavaScript, sin servidor.</footer>
+</div>
+<script src="js/script.js" defer></script>
 </body>
 </html>

@@ -1,47 +1,89 @@
-# Guion del video de demostración (máximo 3 minutos)
+# Guion del video de demostración
 
-Preparación antes de grabar:
+**Duración máxima:** 3 minutos.
+**Preparación:** abrir `index.html` en el navegador con la ventana maximizada, tener las herramientas de desarrollador (F12) listas en la pestaña **Consola** y grabar la pantalla con el audio del micrófono.
 
-- Abrir `index.html` en el navegador a pantalla completa.
-- Abrir la consola del navegador (`F12`, pestaña *Consola*) y dejarla acoplada abajo o a la derecha.
-- Tener la ventana del navegador en un tamaño que permita luego reducir el ancho.
+Cada bloque indica qué mostrar, qué decir y qué punto de la rúbrica evidencia.
 
-## 1. Presentación y diseño (0:00 – 0:30)
+---
 
-- Decir el nombre del grupo y del proyecto: formulario de registro de socios de la Sociedad Astronómica Vega Austral, proyecto académico de Desarrollo Web.
-- Recorrer la página: cabecera con la estrella en SVG, nombre en tipografía serif y panel "ficha de nuevo socio" dividido en tres secciones con `fieldset` y `legend`.
-- Mencionar que solo se usan HTML5, CSS3 y JavaScript puro, sin frameworks.
-- Pasar el ratón por los campos y hacer clic en uno para mostrar el estado de foco (borde y anillo latón).
+## 1. Presentación y diseño del formulario (0:00 – 0:30)
 
-## 2. Validación en tiempo real, evento `input` (0:30 – 1:05)
+**Evidencia:** requerimientos técnicos (HTML5 semántico y CSS3).
 
-- En **Nombre completo**, escribir "Ma" y mostrar que aparece "al menos 3 caracteres"; escribir "Mar1a" y mostrar el mensaje de solo letras; corregir a "María Pérez" y ver el borde verde aurora.
-- En **Contraseña**, escribir letra a letra "vega" (ningún chip), luego "Vega" (se enciende "Una mayúscula"), luego "Vega2026" (se encienden los tres chips).
-- En **Comentarios**, escribir un par de palabras y señalar cómo el contador cambia en vivo.
+- Mostrar la página completa: encabezado con el emblema, título, texto de introducción y la hoja del formulario.
+- Recorrer con el cursor las tres secciones: **Datos personales**, **Cuenta de acceso** y **Programa de interés**.
+- Señalar los asteriscos de campos obligatorios, el campo opcional de comentarios con su contador y el desplegable **Ver términos**.
+- Decir: "El formulario está construido con HTML5 semántico: `form`, `fieldset`, `legend`, `label` con atributo `for`, `input`, `select` y `button`. Los estilos están en un archivo CSS separado con variables, Flexbox, Grid y transiciones. No usamos frameworks ni librerías."
+- Opcional (5 segundos): mostrar en el editor el árbol de archivos `index.html`, `css/style.css` y `js/script.js`.
 
-## 3. Validación al perder el foco, evento `blur` (1:05 – 1:25)
+## 2. Validación en tiempo real al escribir (0:30 – 1:05)
 
-- Hacer clic en **Correo electrónico**, no escribir nada y pulsar Tab: aparece "Escribe tu correo electrónico".
-- Escribir "ana@correo" (sin dominio válido) y pulsar Tab: aparece el mensaje de formato con el ejemplo.
-- Corregir a "ana@correo.com" y ver que el mensaje desaparece y el borde pasa a verde.
+**Evidencia:** evento `input` y manipulación del DOM.
 
-## 4. Mensajes de error por campo y bloqueo del envío inválido, evento `submit` (1:25 – 2:05)
+- Hacer clic en **Nombre completo** y escribir `Lu`: aparece el mensaje "Usa solo letras y espacios (mínimo 3)". Completar `Luis Pérez`: el mensaje desaparece y el borde se pone verde.
+- En **Correo electrónico**, escribir `luis@correo` y mostrar el error de formato; agregar `.com` y ver que se corrige.
+- En **Contraseña**, escribir letra por letra `abc`, luego `Abc`, luego `Abc12345`, y mostrar cómo los tres requisitos (8 caracteres, una mayúscula, un número) se van marcando en verde.
+- Decir: "Cada campo se valida con el evento `input` mientras se escribe, y el mensaje de error se actualiza en el DOM sin recargar la página."
 
-- Dejar varios campos vacíos o incorrectos: teléfono con letras, edad 15, confirmación distinta a la contraseña, desplegable sin elegir y casilla sin marcar.
-- Pulsar **Enviar solicitud** (recalcar que el botón nunca está deshabilitado).
-- Mostrar que la página **no se recarga**, que el panel se sacude y aparece el aviso rojo con el número de campos por corregir, que cada campo muestra su mensaje específico y que el foco saltó al primer campo inválido.
-- Mostrar en la consola que no se imprimió ningún dato.
+## 3. Mensajes de error por campo con el evento `blur` (1:05 – 1:30)
 
-## 5. Envío exitoso (2:05 – 2:35)
+**Evidencia:** evento `blur` y mensajes específicos por campo.
 
-- Corregir todos los campos: teléfono con 9 dígitos, edad 24, contraseñas iguales, elegir "Astrofotografía", marcar la casilla.
-- Pulsar **Enviar solicitud**: aparece el aviso verde de bienvenida con el nombre y el correo.
-- Señalar en la consola la tabla con los datos registrados (la contraseña aparece enmascarada).
-- Mostrar que el formulario se limpió y que los chips y el contador volvieron a cero.
+- Hacer clic en **Teléfono** y salir del campo sin escribir (tabulador): aparece "Escribe tu número de teléfono".
+- Escribir `12ab` en teléfono y salir: aparece "El teléfono debe tener entre 7 y 15 dígitos".
+- En **Edad**, escribir `15` y salir: aparece "La edad debe estar entre 18 y 100".
+- En **Confirmar contraseña**, escribir algo distinto a la contraseña: aparece "Las contraseñas no coinciden".
+- Decir: "Al perder el foco, el evento `blur` valida el campo y muestra un mensaje distinto para cada tipo de error."
 
-## 6. Diseño responsivo (2:35 – 3:00)
+## 4. Bloqueo del envío con datos inválidos (1:30 – 2:00)
 
-- Reducir el ancho de la ventana poco a poco (o activar la vista de dispositivo móvil con `Ctrl+Shift+M` en las herramientas de desarrollo).
-- Señalar los dos puntos de quiebre: por encima de 720 px hay más aire y el panel es más ancho; por debajo de 480 px los campos de teléfono y edad pasan de compartir fila a apilarse y los botones se ponen uno debajo del otro.
-- Mostrar que nada se desborda ni aparece barra horizontal en móvil.
-- Cerrar con una frase de despedida y el nombre del repositorio en GitHub.
+**Evidencia:** evento `submit` con `preventDefault()` y bloqueo del envío.
+
+- Pulsar **Limpiar** para empezar desde cero.
+- Sin llenar nada, pulsar **Enviar solicitud**.
+- Mostrar que: aparece el aviso rojo "Revisa los campos marcados antes de enviar la solicitud", todos los campos obligatorios se marcan en rojo con su mensaje, el foco salta al primer campo con error y la página no se recarga.
+- Llenar algunos campos dejando la casilla de términos sin marcar y volver a pulsar **Enviar solicitud**: sigue bloqueado y aparece "Debes aceptar los términos para continuar".
+- Decir: "El evento `submit` usa `preventDefault()` para impedir el envío mientras exista al menos un error."
+
+## 5. Envío exitoso con confirmación (2:00 – 2:30)
+
+**Evidencia:** mensaje de éxito y registro en consola.
+
+- Completar todos los campos con datos válidos, por ejemplo:
+  - Nombre: `Laura Martínez Ruiz`
+  - Correo: `laura@correo.com`
+  - Teléfono: `0991234567`
+  - Edad: `29`
+  - Contraseña y confirmación: `Meridiano2026`
+  - Programa: `Analítica de Datos`
+  - Comentarios: cualquier texto breve (mostrar que el contador avanza)
+  - Marcar la casilla de términos.
+- Pulsar **Enviar solicitud**.
+- Mostrar el aviso verde "Solicitud enviada" y cómo el formulario queda limpio.
+- Señalar en la **Consola** el objeto registrado con el mensaje "Solicitud válida:" y los datos enviados.
+- Decir: "Como no hay servidor, el envío válido muestra la confirmación y registra los datos en la consola."
+
+## 6. Diseño responsivo (2:30 – 2:55)
+
+**Evidencia:** media queries y adaptación a distintos anchos.
+
+- Reducir el ancho de la ventana del navegador arrastrando el borde (o usar el modo de dispositivo móvil de las herramientas de desarrollador).
+- Mostrar que por debajo de 480 px los campos **Teléfono** y **Edad** pasan de dos columnas a una, los márgenes se reducen y el encabezado se reorganiza sin que nada se desborde.
+- Volver a ampliar la ventana y mostrar cómo recupera la disposición de escritorio.
+- Decir: "El diseño es responsivo gracias a media queries en 480 y 720 píxeles, y a Flexbox y Grid."
+
+## 7. Cierre (2:55 – 3:00)
+
+- Mostrar brevemente el repositorio en GitHub con los archivos y el historial de commits.
+- Decir: "El código completo está en el repositorio con su README y control de versiones. Gracias."
+
+---
+
+## Lista de comprobación antes de grabar
+
+- [ ] La consola del navegador está abierta y visible en la parte inferior.
+- [ ] La ventana empieza maximizada.
+- [ ] Se probó el flujo completo una vez antes de grabar.
+- [ ] El micrófono funciona y no hay ruido de fondo.
+- [ ] El video final dura 3 minutos o menos.

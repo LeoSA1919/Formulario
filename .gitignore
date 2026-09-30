@@ -1,15 +1,20 @@
 # Archivos del sistema operativo
 .DS_Store
+.DS_Store?
+._*
 Thumbs.db
+ehthumbs.db
 desktop.ini
 
-# Editores e IDE
+# Archivos del editor / IDE
 .vscode/
 .idea/
+*.sublime-project
+*.sublime-workspace
 *.swp
 *.swo
 *~
 
-# Registros y archivos temporales
+# Registros y temporales
 *.log
 *.tmp
