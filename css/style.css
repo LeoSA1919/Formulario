@@ -1,0 +1,623 @@
+/* ============================================================================
+   Skytech-Geo · Registro de clientes
+   Hoja de estilos principal (CSS3)
+
+   Organización del archivo:
+     1. Variables (custom properties) en :root
+     2. Reinicio básico y tipografía base
+     3. Encabezado y pie
+     4. Maquetación principal (Grid / Flexbox) — mobile-first
+     5. Formulario: grupos, campos y estados (foco, error, válido)
+     6. Indicador de requisitos de contraseña
+     7. Botones y mensaje global
+     8. Animaciones y transiciones
+     9. Media queries (480px y 768px)
+    10. Preferencias de accesibilidad (movimiento reducido)
+
+   Concepto visual: paleta inspirada en mapas topográficos. Papel gris-verdoso
+   como fondo, azul hipsométrico profundo para la marca y naranja de
+   señalización (como las estacas de topografía) para los acentos.
+   ============================================================================ */
+
+
+/* ----------------------------------------------------------------------------
+   1. VARIABLES CSS
+   ---------------------------------------------------------------------------- */
+:root {
+  /* Colores */
+  --color-papel: #f3f5f2;          /* fondo general */
+  --color-tarjeta: #ffffff;        /* fondo del formulario */
+  --color-tinta: #14232e;          /* texto principal */
+  --color-tinta-suave: #4b5b66;    /* texto secundario */
+  --color-linea: #c9d3cc;          /* bordes neutros */
+  --color-primario: #1e4b5e;       /* azul hipsométrico */
+  --color-primario-oscuro: #143544;
+  --color-acento: #f26b1d;         /* naranja de estaca topográfica */
+  --color-exito: #2e7d4f;
+  --color-exito-fondo: #e8f4ec;
+  --color-error: #c62f2a;
+  --color-error-fondo: #fbeceb;
+  --color-foco: rgba(242, 107, 29, 0.28);
+
+  /* Tipografía (fuentes de sistema: no se permiten CDN ni librerías) */
+  --fuente-base: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --fuente-mono: "Cascadia Code", Consolas, "Courier New", monospace;
+  --tamano-xs: 0.75rem;
+  --tamano-sm: 0.875rem;
+  --tamano-md: 1rem;
+  --tamano-lg: 1.25rem;
+  --tamano-xl: 1.75rem;
+  --tamano-2xl: 2.25rem;
+
+  /* Espaciados */
+  --espacio-1: 0.25rem;
+  --espacio-2: 0.5rem;
+  --espacio-3: 0.75rem;
+  --espacio-4: 1rem;
+  --espacio-5: 1.5rem;
+  --espacio-6: 2rem;
+  --espacio-7: 3rem;
+
+  /* Otros */
+  --radio: 6px;
+  --radio-grande: 12px;
+  --sombra: 0 10px 30px rgba(20, 35, 46, 0.08);
+  --transicion: 180ms ease;
+  --ancho-maximo: 1100px;
+}
+
+
+/* ----------------------------------------------------------------------------
+   2. REINICIO BÁSICO Y TIPOGRAFÍA
+   ---------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--fuente-base);
+  font-size: var(--tamano-md);
+  line-height: 1.55;
+  color: var(--color-tinta);
+  background-color: var(--color-papel);
+}
+
+h1,
+p,
+ul {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+
+/* ----------------------------------------------------------------------------
+   3. ENCABEZADO Y PIE
+   El encabezado usa como firma visual un patrón de curvas de nivel dibujado
+   con SVG inline (data URI), sin recursos externos.
+   ---------------------------------------------------------------------------- */
+.encabezado {
+  background-color: var(--color-primario-oscuro);
+  color: #ffffff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='220' viewBox='0 0 420 220'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.13' stroke-width='1'%3E%3Cpath d='M0 40 C 60 10, 120 70, 180 40 S 300 10, 420 50'/%3E%3Cpath d='M0 80 C 60 50, 120 110, 180 80 S 300 50, 420 90'/%3E%3Cpath d='M0 120 C 60 90, 120 150, 180 120 S 300 90, 420 130'/%3E%3Cpath d='M0 160 C 60 130, 120 190, 180 160 S 300 130, 420 170'/%3E%3Cpath d='M0 200 C 60 170, 120 230, 180 200 S 300 170, 420 210'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 420px 220px;
+}
+
+.encabezado__contenido {
+  max-width: var(--ancho-maximo);
+  margin: 0 auto;
+  padding: var(--espacio-4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-2);
+}
+
+.encabezado__marca {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  font-size: var(--tamano-lg);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Logo geométrico: un rombo naranja, como el símbolo de un punto de control */
+.encabezado__logo {
+  width: 14px;
+  height: 14px;
+  background-color: var(--color-acento);
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+.encabezado__referencia {
+  font-family: var(--fuente-mono);
+  font-size: var(--tamano-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.75;
+}
+
+.pie {
+  margin-top: auto;
+  padding: var(--espacio-4);
+  text-align: center;
+  font-size: var(--tamano-sm);
+  color: var(--color-tinta-suave);
+}
+
+
+/* ----------------------------------------------------------------------------
+   4. MAQUETACIÓN PRINCIPAL (mobile-first: una sola columna)
+   ---------------------------------------------------------------------------- */
+.principal {
+  width: 100%;
+  max-width: var(--ancho-maximo);
+  margin: 0 auto;
+  padding: var(--espacio-5) var(--espacio-4);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espacio-5);
+}
+
+.contexto__titulo {
+  font-size: var(--tamano-xl);
+  line-height: 1.15;
+  font-weight: 700;
+  color: var(--color-primario);
+  margin-bottom: var(--espacio-3);
+}
+
+.contexto__texto {
+  color: var(--color-tinta-suave);
+  margin-bottom: var(--espacio-4);
+}
+
+.contexto__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  margin-bottom: var(--espacio-4);
+}
+
+/* Cada ítem lleva una marca naranja a la izquierda, como una estaca */
+.contexto__lista li {
+  position: relative;
+  padding-left: var(--espacio-4);
+  font-size: var(--tamano-sm);
+}
+
+.contexto__lista li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-acento);
+  transform: rotate(45deg);
+}
+
+.contexto__nota {
+  font-size: var(--tamano-sm);
+  color: var(--color-tinta-suave);
+  border-left: 3px solid var(--color-linea);
+  padding-left: var(--espacio-3);
+}
+
+.obligatorio {
+  color: var(--color-acento);
+  font-weight: 700;
+}
+
+
+/* ----------------------------------------------------------------------------
+   5. FORMULARIO: GRUPOS, CAMPOS Y ESTADOS
+   ---------------------------------------------------------------------------- */
+.formulario {
+  background-color: var(--color-tarjeta);
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio-grande);
+  box-shadow: var(--sombra);
+  padding: var(--espacio-5) var(--espacio-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-5);
+}
+
+.grupo {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0; /* evita que fieldset desborde en móvil */
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+/* La leyenda imita la etiqueta de una leyenda cartográfica */
+.grupo__leyenda {
+  font-family: var(--fuente-mono);
+  font-size: var(--tamano-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-primario);
+  padding: 0;
+  margin-bottom: var(--espacio-2);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.grupo__leyenda::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-linea);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+/* Fila de campos cortos: en móvil se apilan; en 480px+ van en dos columnas */
+.fila {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espacio-4);
+}
+
+.campo__etiqueta {
+  font-size: var(--tamano-sm);
+  font-weight: 600;
+  color: var(--color-tinta);
+}
+
+.campo__opcional {
+  font-weight: 400;
+  color: var(--color-tinta-suave);
+}
+
+.campo__control {
+  width: 100%;
+  font: inherit;
+  font-size: var(--tamano-md);
+  color: var(--color-tinta);
+  background-color: #ffffff;
+  border: 1.5px solid var(--color-linea);
+  border-radius: var(--radio);
+  padding: var(--espacio-3);
+  transition: border-color var(--transicion), box-shadow var(--transicion), background-color var(--transicion);
+}
+
+.campo__control::placeholder {
+  color: #93a0a8;
+}
+
+.campo__control--area {
+  resize: vertical;
+  min-height: 6rem;
+}
+
+select.campo__control {
+  cursor: pointer;
+}
+
+/* Estado: FOCO */
+.campo__control:focus {
+  outline: none;
+  border-color: var(--color-acento);
+  box-shadow: 0 0 0 4px var(--color-foco);
+}
+
+/* Estado: ERROR (borde rojo) — clase añadida por JavaScript */
+.campo__control.es-invalido {
+  border-color: var(--color-error);
+  background-color: var(--color-error-fondo);
+  animation: sacudir 320ms ease;
+}
+
+.campo__control.es-invalido:focus {
+  box-shadow: 0 0 0 4px rgba(198, 47, 42, 0.2);
+}
+
+/* Estado: VÁLIDO (borde verde) — clase añadida por JavaScript */
+.campo__control.es-valido {
+  border-color: var(--color-exito);
+}
+
+.campo__control.es-valido:focus {
+  box-shadow: 0 0 0 4px rgba(46, 125, 79, 0.2);
+}
+
+/* Contenedor del mensaje de error: oculto si está vacío, animado al aparecer */
+.campo__error {
+  display: none;
+  font-size: var(--tamano-sm);
+  color: var(--color-error);
+  font-weight: 500;
+}
+
+.campo__error:not(:empty) {
+  display: block;
+  animation: aparecer 220ms ease-out;
+}
+
+.campo__contador {
+  align-self: flex-end;
+  font-family: var(--fuente-mono);
+  font-size: var(--tamano-xs);
+  color: var(--color-tinta-suave);
+}
+
+/* Casilla de verificación: alineada con su etiqueta mediante Grid */
+.campo--casilla {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--espacio-3);
+  align-items: start;
+}
+
+.campo__casilla {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0.15rem 0 0;
+  accent-color: var(--color-primario);
+  cursor: pointer;
+}
+
+.campo__casilla:focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.campo__etiqueta--casilla {
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* El error de la casilla ocupa la segunda columna, debajo de la etiqueta */
+.campo--casilla .campo__error {
+  grid-column: 2;
+}
+
+/* Casilla en error: se resalta la etiqueta */
+.campo__casilla.es-invalido + .campo__etiqueta--casilla {
+  color: var(--color-error);
+}
+
+
+/* ----------------------------------------------------------------------------
+   6. INDICADOR DE REQUISITOS DE CONTRASEÑA
+   ---------------------------------------------------------------------------- */
+.requisitos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-1);
+}
+
+.requisitos__item {
+  font-family: var(--fuente-mono);
+  font-size: var(--tamano-xs);
+  color: var(--color-tinta-suave);
+  border: 1px solid var(--color-linea);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem 0.15rem 0.45rem;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  transition: color var(--transicion), border-color var(--transicion), background-color var(--transicion);
+}
+
+/* Punto indicador delante de cada requisito */
+.requisitos__item::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--color-linea);
+  transition: background-color var(--transicion);
+}
+
+/* Requisito cumplido — clase añadida por JavaScript */
+.requisitos__item.cumplido {
+  color: var(--color-exito);
+  border-color: var(--color-exito);
+  background-color: var(--color-exito-fondo);
+}
+
+.requisitos__item.cumplido::before {
+  background-color: var(--color-exito);
+}
+
+
+/* ----------------------------------------------------------------------------
+   7. BOTONES Y MENSAJE GLOBAL
+   ---------------------------------------------------------------------------- */
+.acciones {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.boton {
+  font: inherit;
+  font-weight: 600;
+  padding: var(--espacio-3) var(--espacio-5);
+  border-radius: var(--radio);
+  border: 1.5px solid var(--color-primario);
+  background-color: var(--color-primario);
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color var(--transicion), border-color var(--transicion), transform var(--transicion), box-shadow var(--transicion);
+}
+
+.boton:hover {
+  background-color: var(--color-primario-oscuro);
+  border-color: var(--color-primario-oscuro);
+  box-shadow: 0 6px 16px rgba(30, 75, 94, 0.25);
+}
+
+.boton:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.boton:focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.boton:disabled {
+  background-color: var(--color-linea);
+  border-color: var(--color-linea);
+  color: var(--color-tinta-suave);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.boton--secundario {
+  background-color: transparent;
+  color: var(--color-primario);
+}
+
+.boton--secundario:hover {
+  background-color: rgba(30, 75, 94, 0.08);
+  color: var(--color-primario-oscuro);
+  box-shadow: none;
+}
+
+/* Mensaje global: oculto si está vacío; variantes de éxito y error */
+.mensaje {
+  display: none;
+  padding: var(--espacio-3) var(--espacio-4);
+  border-radius: var(--radio);
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+
+.mensaje:not(:empty) {
+  display: block;
+  animation: aparecer 260ms ease-out;
+}
+
+.mensaje--exito {
+  background-color: var(--color-exito-fondo);
+  color: var(--color-exito);
+  border-color: var(--color-exito);
+  animation: aparecer 260ms ease-out, latir 900ms ease-out;
+}
+
+.mensaje--error {
+  background-color: var(--color-error-fondo);
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+
+/* ----------------------------------------------------------------------------
+   8. ANIMACIONES
+   ---------------------------------------------------------------------------- */
+
+/* Aparece deslizándose levemente desde arriba (mensajes) */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Sacudida horizontal sutil al marcar un campo como inválido */
+@keyframes sacudir {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-4px); }
+  75%      { transform: translateX(4px); }
+}
+
+/* Pulso del borde al enviar con éxito */
+@keyframes latir {
+  0%   { box-shadow: 0 0 0 0 rgba(46, 125, 79, 0.45); }
+  100% { box-shadow: 0 0 0 14px rgba(46, 125, 79, 0); }
+}
+
+
+/* ----------------------------------------------------------------------------
+   9. MEDIA QUERIES (mobile-first: se amplía hacia pantallas mayores)
+   ---------------------------------------------------------------------------- */
+
+/* Teléfonos grandes y tablets pequeñas */
+@media (min-width: 480px) {
+  .fila {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .acciones {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .formulario {
+    padding: var(--espacio-6);
+  }
+
+  .contexto__titulo {
+    font-size: var(--tamano-2xl);
+  }
+}
+
+/* Tablets y escritorio: dos columnas (contexto + formulario) */
+@media (min-width: 768px) {
+  .principal {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: var(--espacio-7);
+    padding: var(--espacio-7) var(--espacio-5);
+    align-items: start;
+  }
+
+  /* El texto de apoyo queda fijo mientras se recorre el formulario */
+  .contexto {
+    position: sticky;
+    top: var(--espacio-6);
+  }
+
+  .encabezado__contenido {
+    padding: var(--espacio-5);
+  }
+}
+
+
+/* ----------------------------------------------------------------------------
+   10. ACCESIBILIDAD: usuarios que prefieren menos movimiento
+   ---------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

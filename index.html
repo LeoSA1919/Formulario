@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <!-- Meta viewport: imprescindible para el diseño responsivo (mobile-first) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Formulario de registro de clientes para Skytech-Geo, plataforma de servicios geoespaciales y con drones. Práctica de Desarrollo Web con HTML5, CSS3 y JavaScript.">
+  <title>Registro de clientes | Skytech-Geo</title>
+
+  <!-- Hoja de estilos externa (Sesión 2: CSS) -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Script externo con "defer": se ejecuta cuando el DOM ya está construido (Sesión 3: JavaScript) -->
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+
+  <!-- ===================================================================
+       ENCABEZADO
+       Presenta la marca y el propósito del formulario.
+       =================================================================== -->
+  <header class="encabezado">
+    <div class="encabezado__contenido">
+      <p class="encabezado__marca">
+        <span class="encabezado__logo" aria-hidden="true"></span>
+        Skytech-Geo
+      </p>
+      <p class="encabezado__referencia" aria-hidden="true">Registro de clientes · Ver. 1.0</p>
+    </div>
+  </header>
+
+  <!-- ===================================================================
+       CONTENIDO PRINCIPAL
+       Dos columnas en escritorio (texto de apoyo + formulario),
+       una columna apilada en móvil.
+       =================================================================== -->
+  <main class="principal">
+
+    <!-- Columna de contexto: explica qué ofrece la plataforma -->
+    <aside class="contexto">
+      <h1 class="contexto__titulo">Crea tu cuenta de cliente</h1>
+      <p class="contexto__texto">
+        Regístrate para solicitar levantamientos topográficos, análisis
+        geoespacial, vuelos con drones y consultoría técnica desde un solo lugar.
+      </p>
+      <ul class="contexto__lista">
+        <li>Solicita cotizaciones y haz seguimiento de tus proyectos en línea.</li>
+        <li>Descarga ortofotos, nubes de puntos y planos entregados.</li>
+        <li>Recibe alertas del avance de cada vuelo y levantamiento.</li>
+      </ul>
+      <p class="contexto__nota">
+        Los campos marcados con <span class="obligatorio" aria-hidden="true">*</span>
+        son obligatorios. Todos los datos se validan en tu navegador.
+      </p>
+    </aside>
+
+    <!-- ===============================================================
+         FORMULARIO DE REGISTRO
+         - novalidate: desactiva los globos de error nativos del navegador
+           para que la validación la realice JavaScript y muestre mensajes
+           personalizados. Los atributos HTML5 (required, min, max, etc.)
+           se conservan como documentación semántica y como respaldo.
+         =============================================================== -->
+    <form id="formulario-registro" class="formulario" action="#" method="post" novalidate>
+
+      <!-- ------------------------------------------------------------
+           GRUPO 1: DATOS PERSONALES
+           ------------------------------------------------------------ -->
+      <fieldset class="grupo">
+        <legend class="grupo__leyenda">Datos personales</legend>
+
+        <!-- Campo: Nombre completo -->
+        <div class="campo">
+          <label for="nombre" class="campo__etiqueta">
+            Nombre completo <span class="obligatorio" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            class="campo__control"
+            placeholder="Ej.: Laura Martínez Ruiz"
+            required
+            minlength="3"
+            maxlength="80"
+            pattern="[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]+"
+            autocomplete="name"
+            aria-describedby="error-nombre">
+          <span id="error-nombre" class="campo__error" aria-live="polite"></span>
+        </div>
+
+        <!-- Campo: Correo electrónico -->
+        <div class="campo">
+          <label for="correo" class="campo__etiqueta">
+            Correo electrónico <span class="obligatorio" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="email"
+            id="correo"
+            name="correo"
+            class="campo__control"
+            placeholder="nombre@empresa.com"
+            required
+            maxlength="120"
+            autocomplete="email"
+            aria-describedby="error-correo">
+          <span id="error-correo" class="campo__error" aria-live="polite"></span>
+        </div>
+
+        <!-- Fila con dos campos cortos: teléfono y edad -->
+        <div class="fila">
+          <!-- Campo: Teléfono -->
+          <div class="campo">
+            <label for="telefono" class="campo__etiqueta">
+              Teléfono <span class="obligatorio" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="tel"
+              id="telefono"
+              name="telefono"
+              class="campo__control"
+              placeholder="3001234567"
+              required
+              minlength="7"
+              maxlength="15"
+              pattern="[0-9]{7,15}"
+              inputmode="numeric"
+              autocomplete="tel"
+              aria-describedby="error-telefono">
+            <span id="error-telefono" class="campo__error" aria-live="polite"></span>
+          </div>
+
+          <!-- Campo: Edad -->
+          <div class="campo">
+            <label for="edad" class="campo__etiqueta">
+              Edad <span class="obligatorio" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="number"
+              id="edad"
+              name="edad"
+              class="campo__control"
+              placeholder="18 a 100"
+              required
+              min="18"
+              max="100"
+              step="1"
+              inputmode="numeric"
+              aria-describedby="error-edad">
+            <span id="error-edad" class="campo__error" aria-live="polite"></span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- ------------------------------------------------------------
+           GRUPO 2: DATOS DE ACCESO
+           ------------------------------------------------------------ -->
+      <fieldset class="grupo">
+        <legend class="grupo__leyenda">Datos de acceso</legend>
+
+        <!-- Campo: Contraseña -->
+        <div class="campo">
+          <label for="contrasena" class="campo__etiqueta">
+            Contraseña <span class="obligatorio" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="password"
+            id="contrasena"
+            name="contrasena"
+            class="campo__control"
+            placeholder="Mínimo 8 caracteres"
+            required
+            minlength="8"
+            maxlength="64"
+            autocomplete="new-password"
+            aria-describedby="error-contrasena requisitos-contrasena">
+          <span id="error-contrasena" class="campo__error" aria-live="polite"></span>
+
+          <!-- Indicador de requisitos: JavaScript marca cada ítem como cumplido -->
+          <ul id="requisitos-contrasena" class="requisitos" aria-label="Requisitos de la contraseña">
+            <li class="requisitos__item" data-requisito="longitud">Al menos 8 caracteres</li>
+            <li class="requisitos__item" data-requisito="mayuscula">Una letra mayúscula</li>
+            <li class="requisitos__item" data-requisito="numero">Un número</li>
+          </ul>
+        </div>
+
+        <!-- Campo: Confirmar contraseña -->
+        <div class="campo">
+          <label for="confirmar" class="campo__etiqueta">
+            Confirmar contraseña <span class="obligatorio" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="password"
+            id="confirmar"
+            name="confirmar"
+            class="campo__control"
+            placeholder="Repite la contraseña"
+            required
+            minlength="8"
+            maxlength="64"
+            autocomplete="new-password"
+            aria-describedby="error-confirmar">
+          <span id="error-confirmar" class="campo__error" aria-live="polite"></span>
+        </div>
+      </fieldset>
+
+      <!-- ------------------------------------------------------------
+           GRUPO 3: SERVICIO SOLICITADO
+           ------------------------------------------------------------ -->
+      <fieldset class="grupo">
+        <legend class="grupo__leyenda">Servicio de interés</legend>
+
+        <!-- Campo: Tipo de servicio (SELECT) -->
+        <div class="campo">
+          <label for="servicio" class="campo__etiqueta">
+            Tipo de servicio <span class="obligatorio" aria-hidden="true">*</span>
+          </label>
+          <select id="servicio" name="servicio" class="campo__control" required aria-describedby="error-servicio">
+            <option value="" selected disabled>Selecciona una opción</option>
+            <option value="topografia">Topografía</option>
+            <option value="geoespacial">Geoespacial</option>
+            <option value="drones">Drones</option>
+            <option value="consultoria">Consultoría</option>
+          </select>
+          <span id="error-servicio" class="campo__error" aria-live="polite"></span>
+        </div>
+
+        <!-- Campo: Comentarios (opcional) -->
+        <div class="campo">
+          <label for="comentarios" class="campo__etiqueta">
+            Comentarios <span class="campo__opcional">(opcional)</span>
+          </label>
+          <textarea
+            id="comentarios"
+            name="comentarios"
+            class="campo__control campo__control--area"
+            rows="4"
+            maxlength="500"
+            placeholder="Cuéntanos sobre tu proyecto: ubicación, extensión del terreno, plazos..."
+            aria-describedby="error-comentarios contador-comentarios"></textarea>
+          <span id="error-comentarios" class="campo__error" aria-live="polite"></span>
+          <span id="contador-comentarios" class="campo__contador">0 / 500</span>
+        </div>
+
+        <!-- Campo: Términos y condiciones (CHECKBOX) -->
+        <div class="campo campo--casilla">
+          <input type="checkbox" id="terminos" name="terminos" class="campo__casilla" required aria-describedby="error-terminos">
+          <label for="terminos" class="campo__etiqueta campo__etiqueta--casilla">
+            Acepto los términos y condiciones y la política de tratamiento de datos
+            <span class="obligatorio" aria-hidden="true">*</span>
+          </label>
+          <span id="error-terminos" class="campo__error" aria-live="polite"></span>
+        </div>
+      </fieldset>
+
+      <!-- ------------------------------------------------------------
+           ACCIONES Y MENSAJE GLOBAL
+           ------------------------------------------------------------ -->
+      <div class="acciones">
+        <button type="submit" id="boton-enviar" class="boton">Crear cuenta</button>
+        <button type="reset" id="boton-limpiar" class="boton boton--secundario">Limpiar</button>
+      </div>
+
+      <!-- Mensaje global: éxito o error general. role="status" lo anuncia a lectores de pantalla -->
+      <p id="mensaje-global" class="mensaje" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <footer class="pie">
+    <p>Práctica de Desarrollo Web · HTML5, CSS3 y JavaScript puro · Sin backend</p>
+  </footer>
+
+</body>
+</html>
