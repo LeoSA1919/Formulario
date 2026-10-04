@@ -94,6 +94,6 @@ Para ver el registro en consola del envío exitoso, abre las herramientas de des
 
 Completar con los nombres de las personas integrantes del grupo:
 
-- Nombre y apellido 1
-- Nombre y apellido 2
+- Cesar Leandro Miño Gualan
+- Eduardo Josue Cercado Macias
 - Nombre y apellido 3
