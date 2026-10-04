@@ -91,9 +91,7 @@ Alternativa recomendada para desarrollo: abre la carpeta en Visual Studio Code, 
 Para ver el registro en consola del envío exitoso, abre las herramientas de desarrollador del navegador (tecla F12) y ve a la pestaña **Consola**.
 
 ## Autores
-
-Completar con los nombres de las personas integrantes del grupo:
-
 - Cesar Leandro Miño Gualan
 - Eduardo Josue Cercado Macias
-- Nombre y apellido 3
+- Gabriela Quiyú 
+- Alex Chica Cox
